@@ -5,7 +5,7 @@ import os
 # 路径设置
 PROJECT_DIR = os.getcwd()
 INPUT = os.path.join(PROJECT_DIR, 'BreastTumor')
-OUTPUT = os.path.join(PROJECT_DIR, 'Result', 'Morphology')
+OUTPUT = os.path.join(PROJECT_DIR, 'Result', 'morphology')
 
 
 if __name__ == '__main__':
@@ -59,6 +59,7 @@ if __name__ == '__main__':
 
         # 图像保存
         cv2.imwrite(os.path.join(OUTPUT, file), resultImg)
+
 
         # 结果
         cv2.imshow('resultImg', resultImg)
