@@ -1,18 +1,8 @@
-"""
-Abeer Mohamed
-"""
-import os
-import sys
 import cv2 as cv2
 import matplotlib.cm as cm
-from scipy.ndimage import filters
 import numpy as np
 import pylab as plb
-import matplotlib.pyplot as plt
 import copy
-import scipy.ndimage
-import scipy.ndimage as nd
-import matplotlib.pyplot as plt
 
 _ALPHA = 300
 _BETA = 2
