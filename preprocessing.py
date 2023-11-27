@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
         # 中值滤波
         blur = cv2.medianBlur(enImg, 7)
-        res = cv2.resize(blur, (0, 0), fx=0.2, fy=0.2)
-        cv2.imwrite(os.path.join('preprocessing', file), res)
+        # res = cv2.resize(blur, (0, 0), fx=0.2, fy=0.2)
+        cv2.imwrite(os.path.join('preprocessing', file), blur)
 
 
