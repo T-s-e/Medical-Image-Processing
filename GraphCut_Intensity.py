@@ -1,4 +1,3 @@
-
 import cv2
 import numpy as np
 import maxflow
@@ -92,15 +91,9 @@ class GraphMaker:
 
         for coordinate in self.background_seeds:
             self.graph[coordinate[1] - 1, coordinate[0] - 1] = 0
-            #self.background_average += self.image[coordinate[1], coordinate[0]]
-
-        #self.background_average /= len(self.background_seeds)
 
         for coordinate in self.foreground_seeds:
             self.graph[coordinate[1] - 1, coordinate[0] - 1] = 1
-            #self.foreground_average += self.image[coordinate[1], coordinate[0]]
-
-        #self.foreground_average /= len(self.foreground_seeds)
 
     def populate_graph(self):
         self.nodes = []
@@ -117,18 +110,7 @@ class GraphMaker:
                 self.nodes.append((self.get_node_num(x, y, self.image.shape), 0, self.MAXIMUM))
 
             else:
-                '''d_f = np.power(self.image[y, x] - self.foreground_average, 2)
-                d_b = np.power(self.image[y, x] - self.background_average, 2)
-                d_f = np.sum(d_f)
-                d_b = np.sum(d_b)
-                e_f = d_f / (d_f + d_b)
-                e_b = d_b / (d_f + d_b)'''
                 self.nodes.append((self.get_node_num(x, y, self.image.shape), 0, 0))
-
-                '''if e_f > e_b:
-                    self.graph[y, x] = 1.0
-                else:
-                    self.graph[y, x] = 0.0'''
 
         for (y, x), value in np.ndenumerate(self.graph):
             if y == self.graph.shape[0] - 1 or x == self.graph.shape[1] - 1:
