@@ -206,8 +206,8 @@ class ImageSegmenter:
         ax1.axis("off")
         ax2.axis("off")
         ax3.axis("off")
-        plt.show()
         plt.savefig(os.path.join('Result', 'NCut', self.filename))
+        plt.show()
         print("Saved to " + os.path.join('Result', 'NCut', self.filename))
 
 
