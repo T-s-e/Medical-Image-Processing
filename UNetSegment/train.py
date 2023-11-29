@@ -85,27 +85,6 @@ def train_net(net,
                 optimizer.step()
 
                 pbar.update(imgs.shape[0])
-                # global_step += 1
-                # dataset_len = len(dataset);
-                # a1 = dataset_len // 10
-                # a2 = dataset_len / 10
-                # b1 = global_step % a1
-                # b2 = global_step % a2
-                #
-                # if global_step % (len(dataset) // (10 * batch_size)) == 0:
-                #     val_score = eval_net(net, val_loader, device, n_val)
-                #     if net.n_classes > 1:
-                #         logging.info('Validation cross entropy: {}'.format(val_score))
-                #         writer.add_scalar('Loss/test', val_score, global_step)
-                #
-                #     else:
-                #         logging.info('Validation Dice Coeff: {}'.format(val_score))
-                #         writer.add_scalar('Dice/test', val_score, global_step)
-                #
-                #     writer.add_images('images', imgs, global_step)
-                #     if net.n_classes == 1:
-                #         writer.add_images('masks/true', true_masks, global_step)
-                #         writer.add_images('masks/pred', torch.sigmoid(masks_pred) > 0.5, global_step)
             val_score = eval_net(net, val_loader, device, n_val)
             logging.info('Validation Dice Coeff: {}'.format(val_score))
             writer.add_scalar('Dice/test', val_score, global_step)
