@@ -157,7 +157,7 @@ def activeContour(image_file, center, radius):
 
 
 def _test():
-    activeContour("img_1.png", (231, 129), 60)
+    activeContour("img.png", (231, 129), 60)
     return
 
 

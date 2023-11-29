@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import maxflow
 
-
 class GraphMaker:
 
     foreground = 1

@@ -68,28 +68,29 @@ if __name__ == "__main__":
         output_i = np.clip(output * 255.0, 0, 255).astype('uint8')
         output_gray = cv2.cvtColor(output_i, cv2.COLOR_BGR2GRAY)
 
-        # 展示输入图像
-        plt.figure(figsize=(8, 8))
-        plt.subplot(221)
-        plt.imshow(input_img, cmap='gray')
-        plt.title('Input')
-        plt.axis('off')
+        # # 展示输入图像
+        # plt.figure(figsize=(8, 8))
+        # plt.subplot(221)
+        # plt.imshow(input_img, cmap='gray')
+        # plt.title('Input')
+        # plt.axis('off')
+        #
+        # # 展示 Texture Enhanced 图像
+        # plt.subplot(222)
+        # plt.imshow(img_accum, cmap='gray')
+        # plt.title('Texture Enhanced')
+        # plt.axis('off')
+        #
+        # # 展示 Selected Features 图像
+        # plt.subplot(223)
+        # plt.imshow(fsp_img_i, cmap='gray')
+        # plt.title('Selected Features')
+        # plt.axis('off')
+        #
+        # # 展示 Segmented Features 图像
+        # plt.subplot(224)
 
-        # 展示 Texture Enhanced 图像
-        plt.subplot(222)
-        plt.imshow(img_accum, cmap='gray')
-        plt.title('Texture Enhanced')
-        plt.axis('off')
-
-        # 展示 Selected Features 图像
-        plt.subplot(223)
-        plt.imshow(fsp_img_i, cmap='gray')
-        plt.title('Selected Features')
-        plt.axis('off')
-
-        # 展示 Segmented Features 图像
-        plt.subplot(224)
-        plt.imshow(output_gray, cmap='gray')
+        plt.imshow(255-output_gray, cmap='gray')
         plt.title('Segmented Features')
         plt.axis('off')
         plt.savefig(os.path.join('..', 'Result', 'Gabor', file))

@@ -1,9 +1,6 @@
-# from keras.models import load_model
-from sklearn.cluster import KMeans
 import cv2
 import numpy as np
 import os
-import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
 

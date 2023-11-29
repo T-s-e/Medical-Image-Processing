@@ -51,7 +51,7 @@ class BasicDataset(Dataset):
         assert len(img_file) == 1, \
             f'Either no image or multiple images found for the ID {idx}: {img_file}'
         mask = Image.open(mask_file[0])
-        # mask = raw_mask.convert('RGB')      # if input mask is not RGB
+        # mask = mask.convert('GRAY')         # if input mask is not GRAY
         img = Image.open(img_file[0])
         # img = raw_img.convert('RGB')        # if input image is not RGB
 
