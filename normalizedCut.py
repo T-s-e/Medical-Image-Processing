@@ -16,6 +16,7 @@ from scipy.sparse import diags
 import scipy.sparse
 import imageio.v2 as imageio
 import os
+import cv2
 
 
 
@@ -182,31 +183,36 @@ class ImageSegmenter:
         A, D = self.adjacency(r,sigma_B,sigma_X)
         mask = self.cut(A,D)
         #Show Original Image
-        ax1 = plt.subplot(1,3,1)
-        if self.image.ndim == 3:
-            ax1.imshow(self.image)
-        else:
-            ax1.imshow(self.image, cmap="gray")
-        #Stack mask if color image
-        if self.image.ndim == 3:
-            mask = np.dstack((mask, mask, mask))
-        #Print one segment
-        ax2 = plt.subplot(1,3,2)
-        if self.image.ndim == 3:
-            ax2.imshow(self.image*mask)
-        else:
-            ax2.imshow(self.image*mask, cmap="gray")
-        #Print next segment
-        ax3 = plt.subplot(1,3,3)
-        if self.image.ndim == 3:
-            ax3.imshow(self.image*~mask)
-        else:
-            ax3.imshow(self.image*~mask, cmap="gray")
+        # ax1 = plt.subplot(1,3,1)
+        # if self.image.ndim == 3:
+        #     ax1.imshow(self.image)
+        # else:
+        #     ax1.imshow(self.image, cmap="gray")
+        # #Stack mask if color image
+        # if self.image.ndim == 3:
+        #     mask = np.dstack((mask, mask, mask))
+        # #Print one segment
+        # ax2 = plt.subplot(1,3,2)
+        # if self.image.ndim == 3:
+        #     ax2.imshow(self.image*mask)
+        # else:
+        #     ax2.imshow(self.image*mask, cmap="gray")
+        # #Print next segment
+        # ax3 = plt.subplot(1,3,3)
 
-        ax1.axis("off")
-        ax2.axis("off")
-        ax3.axis("off")
-        plt.savefig(os.path.join('Result', 'NCut', self.filename))
+        plt.plot()
+        if self.image.ndim == 3:
+            plt.imshow(self.image * ~mask)
+        else:
+            plt.imshow(mask, cmap="gray")
+
+        # Hide axis
+        plt.axis("off")
+
+        # Save the figure without white borders
+        plt.savefig(os.path.join('Result', 'NCut', self.filename), bbox_inches='tight', pad_inches=0)
+
+        # Show the plot
         plt.show()
         print("Saved to " + os.path.join('Result', 'NCut', self.filename))
 
@@ -214,7 +220,6 @@ class ImageSegmenter:
 if __name__ == '__main__':
     files = os.listdir('preprocessing')
     for file in files:
-        print(file)
         ImageSegmenter(file).segment()
 
 

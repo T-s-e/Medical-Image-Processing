@@ -91,9 +91,9 @@ if __name__ == "__main__":
         # plt.subplot(224)
 
         plt.imshow(255-output_gray, cmap='gray')
-        plt.title('Segmented Features')
+        # plt.title('Segmented Features')
         plt.axis('off')
-        plt.savefig(os.path.join('..', 'Result', 'Gabor', file))
+        plt.savefig(os.path.join('..', 'Result', 'Gabor', file), bbox_inches='tight', pad_inches=0)
         plt.show()
 
         print("Blue: Foreground Features; Green: Background")
