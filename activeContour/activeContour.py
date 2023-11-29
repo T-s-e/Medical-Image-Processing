@@ -3,6 +3,14 @@ import matplotlib.cm as cm
 import numpy as np
 import pylab as plb
 import copy
+from scipy.spatial.distance import cdist
+import os
+
+
+# 路径设置
+PROJECT_DIR = os.getcwd()
+INPUT = os.path.join(PROJECT_DIR, '..', 'BreastTumor')
+OUTPUT = os.path.join(PROJECT_DIR, '..', 'Result', 'activeContour')
 
 _ALPHA = 300
 _BETA = 2
@@ -114,12 +122,25 @@ def _pointsOnCircle(center, radius, num_points=12):
     return points
 
 
+def postprocess_contour(snake):
+    # 计算每个点之间的距离矩阵
+    distances = cdist(snake, snake)
+
+    # 找到每个点的最近邻
+    nearest_neighbors = np.argmin(distances, axis=1)
+
+    # 生成连续轮廓
+    new_contour = snake[nearest_neighbors]
+
+    return new_contour
+
+
 def activeContour(image_file, center, radius):
-    image = cv2.imread(image_file, 0)
+    image = cv2.imread(os.path.join(INPUT, image_file), 0)
     plb.ion()
     plb.figure(figsize=np.array(np.shape(image)) / 50.)
 
-    snake = _pointsOnCircle(center, radius, 20)
+    snake = _pointsOnCircle(center, radius, 50)
     grediant = basicImageGradiant(image)
     plb.ioff()
 
@@ -146,20 +167,55 @@ def activeContour(image_file, center, radius):
             snake[index] = (snake[index] + neighbors[indexOFlessEnergy])
         snakeColon = copy.deepcopy(snake)
 
+    # plb.ioff()
+    # _display(image, None, snake)
+    # plb.plot()
+    # # plb.savefig(os.path.splitext(image_file)[0] + "-segmented.png")
+    # plb.show()
+
     plb.ioff()
     _display(image, None, snake)
     plb.plot()
-    # plb.savefig(os.path.splitext(image_file)[0] + "-segmented.png")
+
+    # 后处理，获取连续轮廓
+    new_contour = postprocess_contour(snake)
+
+    # 显示连续轮廓
+    plb.plot(new_contour[:, 0], new_contour[:, 1], 'b-', markersize=10.0)
     plb.show()
 
-    return
+    # 创建空白图像
+    binary_image = np.zeros_like(image)
 
+    # 使用连续轮廓填充图像
+    cv2.fillPoly(binary_image, [new_contour.astype(int)], 255)
 
+    # 显示填充后的图像
+    cv2.imshow('Filled Image', binary_image)
+    cv2.imwrite(os.path.join(OUTPUT, image_file), binary_image)
+    cv2.waitKey(0)
 
-def _test():
-    activeContour("img.png", (231, 129), 60)
     return
 
 
 if __name__ == '__main__':
-    _test()
+    files = os.listdir(INPUT)
+    num = len(files)
+
+    centers = [(320, 103), (231, 129), (210, 162), (211, 101), (272, 171), (149, 121), (149, 121), (263, 147), (276, 228), (318, 146)]
+    radius = [40, 60, 141, 88, 160, 44, 44, 100, 122, 82]
+
+    for i in range(num):
+        print('processing: ', files[i])
+        activeContour(files[i], centers[i], radius[i])
+
+        # img = cv2.imread(os.path.join(INPUT, files[i]), 0)
+        # plb.ioff()
+        # _display(img)
+        # plb.plot()
+
+        plb.show()
+        # exit()
+
+
+

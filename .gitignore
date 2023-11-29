@@ -1,0 +1,5 @@
+UNetSegment/data/imgs/
+UNetSegment/data/masks/
+UNetSegment/checkpoints/
+UNetSegment/runs/
+
